@@ -1,13 +1,13 @@
 from django.db import models
 
-class departamentos (models.Model):
+class Departamentos (models.Model):
     idDepto = models.AutoField(primary_key=True, unique=True)
     numeroDepto = models.IntegerField()
     torre = models.CharField(max_length=1, unique=True)
-    def _str_(self):
+    def __str__(self):
         return self.idDepto
 
-class habitante (models.Model):
+class Habitante (models.Model):
     TIPO = [
         ('A', 'Arrendatario'),
         ('P', 'Propietario'),
@@ -17,23 +17,24 @@ class habitante (models.Model):
     correo = models.EmailField(unique=True)
     telefono = models.IntegerField()
     contactoEmergencia = models.IntegerField()
-    def _str_(self):
+    habitante_tipo = models.CharField(max_length=1, choices=TIPO, default='P')
+    def __str__(self):
         return self.rut
 
-class deptoHabitante (models.Model):
-    idDepto = models.ForeignKey(departamentos, on_delete=models.CASCADE)
-    rut = models.ForeignKey(habitante, on_delete=models.CASCADE)
-    fechaInicio = models.DateField()
+class DeptoHabitante (models.Model):
+    depto = models.ForeignKey(Departamentos, on_delete=models.PROTECT)
+    habitante = models.ForeignKey(Habitante, on_delete=models.CASCADE)
+    fechaInicio = models.DateField(auto_now=True)
     fechaTermino = models.DateField(null=True)
-    def _str_(self):
-        return self.habitante.nombre + self.departamentos.numeroDepto
-
-class deuda (models.Model):
+    def __str__(self):
+        return f"{str(self.depto)}  {str(self.habitante.rut)}"
+    
+class Deuda (models.Model):
     idDeuda = models.AutoField(primary_key=True, unique=True)
     monto = models.IntegerField()
     fechaDeuda = models.DateField()
     fechaVencimiento = models.DateField()
-    def _str_(self):
+    def __str__(self):
         return self.idDeuda
 
 class Boletapago (models.Model):
@@ -44,11 +45,10 @@ class Boletapago (models.Model):
         ('A', 'Anulado'),
         ('R', 'Rechazado'),
     ]
-
     idPago = models.AutoField(primary_key=True, unique=True)
     fechaPago = models.DateTimeField()
-    monto = models.ForeignKey(deuda,on_delete=models.CASCADE)
-    depto = models.ForeignKey(departamentos,on_delete=models.CASCADE)
-    estado = models.CharField(max_length=1, choices=ESTADOS)
-    def _str_(self):
+    monto = models.ForeignKey(Deuda,on_delete=models.CASCADE)
+    depto = models.ForeignKey(Departamentos,on_delete=models.CASCADE)
+    estado = models.CharField(max_length=1, choices=ESTADOS,default= 'N')
+    def __str__(self):
         return self.idPago
