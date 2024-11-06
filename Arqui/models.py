@@ -37,9 +37,18 @@ class deuda (models.Model):
         return self.idDeuda
 
 class Boletapago (models.Model):
+
+    ESTADOS = [
+        ('P', 'Pagado'),
+        ('N', 'No Pagado'),
+        ('A', 'Anulado'),
+        ('R', 'Rechazado'),
+    ]
+
     idPago = models.AutoField(primary_key=True, unique=True)
     fechaPago = models.DateTimeField()
     monto = models.ForeignKey(deuda,on_delete=models.CASCADE)
     depto = models.ForeignKey(departamentos,on_delete=models.CASCADE)
+    estado = models.CharField(max_length=1, choices=ESTADOS)
     def _str_(self):
         return self.idPago
