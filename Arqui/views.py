@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.utils import timezone
-from .models import departamentos, deuda, Boletapago
+from .models import Departamentos, Deuda, Boletapago
 from datetime import datetime, timedelta
 from django.db.models import Q
 
@@ -9,9 +9,9 @@ def generar_gastos_comunes(request, mes=None, anio=None):
     try:
         if mes and anio:  
             fecha_deuda = datetime(int(anio), int(mes), 1)
-            for depto in departamentos.objects.all():
+            for depto in Departamentos.objects.all():
                 
-                deuda.objects.create(
+                Deuda.objects.create(
                     monto=50000,  
                     fechaDeuda=fecha_deuda,
                     fechaVencimiento=fecha_deuda + timedelta(days=30),
@@ -19,8 +19,8 @@ def generar_gastos_comunes(request, mes=None, anio=None):
         elif anio:  
             for mes in range(1, 13):
                 fecha_deuda = datetime(int(anio), mes, 1)
-                for depto in departamentos.objects.all():
-                    deuda.objects.create(
+                for depto in Departamentos.objects.all():
+                    Deuda.objects.create(
                         monto=50000,  
                         fechaDeuda=fecha_deuda,
                         fechaVencimiento=fecha_deuda + timedelta(days=30),
@@ -33,7 +33,7 @@ def generar_gastos_comunes(request, mes=None, anio=None):
 def marcar_pago(request, depto_id, mes, anio):
     try:
         
-        depto = departamentos.objects.get(idDepto=depto_id)
+        depto = Departamentos.objects.get(idDepto=depto_id)
 
         boletapagos = Boletapago.objects.filter(
             depto__idDepto=depto_id,
@@ -56,7 +56,7 @@ def marcar_pago(request, depto_id, mes, anio):
         else:
             return JsonResponse({"status": "Error", "message": "No se encontraron pagos para este mes y año"})
             #toy pa la caga chavales
-    except departamentos.DoesNotExist:
+    except Departamentos.DoesNotExist:
         return JsonResponse({"status": "Error", "message": "Departamento no encontrado"})
     except Exception as e:
         return JsonResponse({"status": "Error", "message": str(e)})
@@ -65,7 +65,7 @@ def listar_pendientes(request, mes, anio):
     try:
         fecha_limite = datetime(int(anio), int(mes), 1)
 
-        deudas_pendientes = deuda.objects.filter(
+        deudas_pendientes = Deuda.objects.filter(
             fechaDeuda__lte=fecha_limite
         ).exclude(boletapago__isnull=False).order_by('fechaDeuda')
 
