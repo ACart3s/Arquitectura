@@ -1,9 +1,14 @@
 from django.db import models
 
+class Torre (models.Model):
+    nombreTorre = models.CharField(max_length=1)
+    def __str__(self):
+        return self.nombreTorre
+
 class Departamentos (models.Model):
     idDepto = models.AutoField(primary_key=True, unique=True)
     numeroDepto = models.IntegerField()
-    torre = models.CharField(max_length=1, unique=True)
+    torre = models.ForeignKey(Torre, on_delete=models.PROTECT)
     def __str__(self):
         return self.idDepto
 
