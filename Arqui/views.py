@@ -92,9 +92,11 @@ def listar_pendientes(request):
     try:
 
         fecha_limite = datetime(int(anio), int(mes), 1) + timedelta(days=30)
+        fecha_inicio = datetime(int(anio), int(mes), 1)
 
         deudas_pendientes = BoletaPago.objects.filter(
             deuda__fechaVencimiento__lte=fecha_limite,
+            deuda__fechaVencimiento__gte=fecha_inicio,
             fechaPago__isnull=True,
             estado='N'
         )
