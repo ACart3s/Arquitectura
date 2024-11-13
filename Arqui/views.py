@@ -106,11 +106,33 @@ def listar_pendientes(request):
         for deuda_obj in deudas_pendientes:
             boleta = BoletaPago.objects.get(pk=deuda_obj.pk)
             resultado.append({
+                'id': boleta.pk,
                 'departamento': boleta.depto.depto.numeroDepto,
                 'periodo': deuda_obj.deuda.fechaDeuda.strftime('%m/%Y'),
                 'monto': deuda_obj.deuda.monto
             })
 
         return JsonResponse({'pendientes': resultado})
+    except Exception as e:
+        return JsonResponse({'status': 'Error', 'message': str(e)})
+
+
+@require_POST
+@csrf_exempt
+def pago_realizado(request):
+    mes = request.POST.get('mes')
+    anio = request.POST.get('anio')
+    pago_id = request.POST.get('pago_id')
+
+    if not mes or not anio:
+        return JsonResponse({'status': 'Error', 'message': 'Falta mes y año'})
+    try:
+        pago = BoletaPago.objects.get(pk=pago_id)
+        pago.fechaPago = datetime(int(anio), int(mes), 1)
+        pago.estado = 'P'
+        pago.save()
+        return JsonResponse({'status': 'Pago realizado exitosamente'})
+    except BoletaPago.DoesNotExist:
+        return JsonResponse({'status': 'Error', 'message': 'Pago no encontrado'})
     except Exception as e:
         return JsonResponse({'status': 'Error', 'message': str(e)})

@@ -23,4 +23,5 @@ urlpatterns = [
     path('generar_gastos/', views.generar_gastos_comunes, name='generar_gastos_comunes'),
     path('marcar_pago/', views.marcar_pago, name='marcar_pago'),
     path('listar_pendientes/', views.listar_pendientes, name='listar_pendientes'),
+    path('realizar_pago/', views.pago_realizado, name='pagar'),
 ]
