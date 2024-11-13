@@ -53,7 +53,7 @@ class Boletapago (models.Model):
     idPago = models.AutoField(primary_key=True, unique=True)
     fechaPago = models.DateTimeField()
     monto = models.ForeignKey(Deuda,on_delete=models.CASCADE)
-    depto = models.ForeignKey(Departamentos,on_delete=models.CASCADE)
+    depto = models.ForeignKey(Departamentos,on_delete=models.PROTECT)
     estado = models.CharField(max_length=1, choices=ESTADOS,default= 'N')
     def __str__(self):
         return self.idPago
