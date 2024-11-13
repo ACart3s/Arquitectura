@@ -6,11 +6,10 @@ class Torre (models.Model):
         return self.nombreTorre
 
 class Departamentos (models.Model):
-    idDepto = models.AutoField(primary_key=True, unique=True)
     numeroDepto = models.IntegerField()
     torre = models.ForeignKey(Torre, on_delete=models.PROTECT)
     def __str__(self):
-        return self.idDepto
+        return self.torre.nombreTorre + " " + str(self.numeroDepto)
 
 class Habitante (models.Model):
     TIPO = [
@@ -28,21 +27,20 @@ class Habitante (models.Model):
 
 class DeptoHabitante (models.Model):
     depto = models.ForeignKey(Departamentos, on_delete=models.PROTECT)
-    habitante = models.ForeignKey(Habitante, on_delete=models.CASCADE)
-    fechaInicio = models.DateField(auto_now=True)
-    fechaTermino = models.DateField(null=True)
+    habitante = models.ForeignKey(Habitante, on_delete=models.PROTECT)
+    fechaInicio = models.DateTimeField()
+    fechaTermino = models.DateTimeField(null=True, blank=True)
     def __str__(self):
         return f"{str(self.depto)}  {str(self.habitante.rut)}"
     
 class Deuda (models.Model):
-    idDeuda = models.AutoField(primary_key=True, unique=True)
-    monto = models.IntegerField()
-    fechaDeuda = models.DateField()
-    fechaVencimiento = models.DateField()
+    monto = models.BigIntegerField()
+    fechaDeuda = models.DateTimeField()
+    fechaVencimiento = models.DateTimeField()
     def __str__(self):
-        return self.idDeuda
+        return str(self.fechaDeuda) + " " + str(self.fechaVencimiento)
 
-class Boletapago (models.Model):
+class BoletaPago (models.Model):
 
     ESTADOS = [
         ('P', 'Pagado'),
@@ -50,16 +48,15 @@ class Boletapago (models.Model):
         ('A', 'Anulado'),
         ('R', 'Rechazado'),
     ]
-    idPago = models.AutoField(primary_key=True, unique=True)
-    fechaPago = models.DateTimeField()
-    monto = models.ForeignKey(Deuda,on_delete=models.CASCADE)
-    depto = models.ForeignKey(Departamentos,on_delete=models.PROTECT)
+    fechaPago = models.DateTimeField(null=True, blank=True)
+    deuda = models.ForeignKey(Deuda,on_delete=models.PROTECT)
+    depto = models.ForeignKey(DeptoHabitante,on_delete=models.PROTECT)
     estado = models.CharField(max_length=1, choices=ESTADOS,default= 'N')
     def __str__(self):
-        return self.idPago
+        return self.depto.habitante.rut + " " + self.estado
 
 #Desarrollo de modelos para la implementación completa a futuro
-class Trabajador(models.Model):
+""" class Trabajador(models.Model):
     TIPO = [
         ('A', 'Administrador'),
         ('C', 'Conserje'),
@@ -94,7 +91,7 @@ class HistorialMantenciones (models.Model):
     fechaInicio = models.ForeignKey(Mantenimiento,related_name='historial_inicio', on_delete=models.CASCADE)
     fechaTermino = models.ForeignKey(Mantenimiento, related_name='historial_termino',on_delete=models.CASCADE)
     def __str__(self):
-        return self.idMant 
+        return self.idMant  """
 
 
 

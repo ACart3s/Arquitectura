@@ -20,7 +20,7 @@ from Arqui import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('generar_gastos/<int:mes>/<int:anio>/', views.generar_gastos_comunes, name='generar_gastos_comunes'),
-    path('marcar_pago/<int:depto_id>/<int:mes>/<int:anio>/', views.marcar_pago, name='marcar_pago'),
-    path('listar_pendientes/<int:mes>/<int:anio>/', views.listar_pendientes, name='listar_pendientes'),
+    path('generar_gastos/', views.generar_gastos_comunes, name='generar_gastos_comunes'),
+    path('marcar_pago/', views.marcar_pago, name='marcar_pago'),
+    path('listar_pendientes/', views.listar_pendientes, name='listar_pendientes'),
 ]
