@@ -17,11 +17,26 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from Arqui import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    #EndPoints
     path('generar_gastos/', views.generar_gastos_comunes, name='generar_gastos_comunes'),
     path('marcar_pago/', views.marcar_pago, name='marcar_pago'),
     path('listar_pendientes/', views.listar_pendientes, name='listar_pendientes'),
     path('realizar_pago/', views.pago_realizado, name='pagar'),
+
+
+    #FrontEnd
+    path('', views.index, name='index'),
+    path('login/', views.login, name='login'),
+    path('generator/', views.generator, name='generator'),
+    path('pending/', views.pending, name='pending'),
+    path('pay/', views.checkPayment, name='pay'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

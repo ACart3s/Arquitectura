@@ -1,0 +1,33 @@
+{% extends "Arqui/template.html" %}
+{% load static %}
+
+{% block sources %}
+<script src="{% static 'Arqui/js/togglePassword.js'%}"></script>
+{% endblock sources %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Iniciar Sesión</h2>
+    </div>
+    <div class="card-body">
+        <form action="#" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">Correo Electronico</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <div class="password-input">
+                    <input type="password" id="password" name="password" class="form-control" required>
+                    <span class="toggle-password">
+                        <i class="bx bx-show"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="btn"><i class='bx bx-log-in'></i>Iniciar Sesión</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

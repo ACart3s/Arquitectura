@@ -1,0 +1,31 @@
+{% extends "Arqui/template.html" %}
+{% load static %}
+
+{% block sources %}
+<link rel="stylesheet" href="{% static 'Arqui/css/check.css'%}">
+<script src="{% static 'Arqui/js/pay.js' %}"></script>
+{% endblock sources %}
+
+
+{% block content %}
+<div class="content">
+    <div class="form-card">
+        <h2>Pagar Gasto Comun</h2>
+        <form id="gastosForm">
+            <div class="form-group">
+                <label for="departament">Departamento</label>
+                <input type="text" id="departament" placeholder="101" class="form-input">
+            </div>
+            <div class="form-group">
+                <label for="periodo">Periodo</label>
+                <div class="periodo-container">
+                    <input type="text" id="periodoMes" maxlength="2" placeholder="00" class="periodo-input">
+                    <span class="separator">/</span>
+                    <input type="text" id="periodoAno" maxlength="4" placeholder="0000" class="periodo-input">
+                </div>
+            </div>
+            <button type="submit" class="submit-button">Pagar Gastos</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

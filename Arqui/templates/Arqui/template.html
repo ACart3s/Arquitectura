@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Mirador - Administración</title>
+    <link rel="stylesheet" href="{% static 'Arqui/css/global.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    {% block sources %}{% endblock sources %}
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages%}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% if not request.path == '/login/'%}
+    <div class="sidebar">
+        <a href="{% url 'index'%}" class="sidebar-icon">
+            <i class='bx bxs-dashboard'></i>
+        </a>
+        <a href="{% url 'generator'%}" class="sidebar-icon">
+            <i class='bx bx-badge-check' ></i>
+        </a>
+        <a href="{% url 'pending'%}" class="sidebar-icon">
+            <i class='bx bx-list-ul' ></i>
+        </a>
+        <a href="{% url 'pay'%}" class="sidebar-icon">
+            <i class='bx bx-dollar'></i>
+        </a>
+    </div>
+    {% endif %}
+    <div class="container">
+        {% block content %}{% endblock content %}
+    </div>
+</body>
+</html>

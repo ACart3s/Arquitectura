@@ -1,0 +1,68 @@
+{% extends "Arqui/template.html" %}
+{% load static %}
+
+{% block sources %}
+<link rel="stylesheet" href="{% static "Arqui/css/dashboard.css" %}">
+{% endblock sources %}
+
+{% block content %}
+<div class="content">
+    <div class="dashboard">
+        <div class="card">
+            <h2>Total Gastos Comunes</h2>
+            <div class="value">$10.000.000 <i class='bx bx-trending-up' ></i></div>
+        </div>
+        <div class="card">
+            <h2>Pagos Pendientes</h2>
+            <div class="value">13 <i class='bx bxs-error-alt'></i></div>
+        </div>
+        <div class="card">
+            <h2>Residentes</h2>
+            <div class="value">50 <i class='bx bx-group'></i></div>
+        </div>
+    </div>
+    <div class="chart-container">
+        <canvas id="chart"></canvas>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('chart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                datasets: [{
+                    label: 'Gastos Comunes',
+                    data: [6000000, 5000000, 4700000, 8000000, 6300000, 6300000, 7800000, 7000000, 7000000, 9500000, 8800000, 10000000],
+                    borderColor: '#000',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false,
+                            drawBorder: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
+</div>
+{% endblock content %}

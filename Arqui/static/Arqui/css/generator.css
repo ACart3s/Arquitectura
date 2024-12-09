@@ -1,0 +1,142 @@
+:root {
+  --primary-color: #000;
+  --background-color: #fff;
+  --border-color: #e0e0e0;
+  --text-color: #333;
+}
+
+.content {
+  margin-left: 60px;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  flex: 1;
+}
+
+.form-card,
+.table-card {
+  background-color: var(--background-color);
+  border-radius: 12px;
+  padding: 24px;
+  height: fit-content;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid black;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.form-card {
+  width: 400px;
+}
+
+.table-card {
+  flex: 1;
+}
+
+h2 {
+  margin: 0 0 24px 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.periodo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.periodo-input {
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  text-align: center;
+}
+
+#periodoMes {
+  width: 60px;
+}
+
+#periodoAno {
+  width: 100px;
+}
+
+.separator {
+  font-size: 20px;
+  color: var(--text-color);
+}
+
+.info-text {
+  color: #666;
+  font-size: 14px;
+  margin: 16px 0;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+th {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+.table-header .form-group {
+  gap: 8px;
+  flex-direction: row;
+  align-items: center;
+}
